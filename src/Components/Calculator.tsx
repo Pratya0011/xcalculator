@@ -23,6 +23,24 @@ function Calculator() {
     { id: 16, value: "/" },
   ];
 
+  const handleInput = (value: string) => {
+    if (value === "=") {
+      if (!input) {
+        setOutput("Error");
+      } else {
+        try {
+          setOutput(eval(input));
+        } catch (error: any) {
+          setInput("Error");
+        }
+      }
+      return;
+    } else if (value === "C") {
+      setInput("");
+      return;
+    }
+    setInput((prev: string) => prev + value);
+  };
   return (
     <Grid
       sx={{
@@ -49,6 +67,7 @@ function Calculator() {
                 border: "1px solid black",
                 color: "#000",
               }}
+              onClick={() => handleInput(button?.value)}
             >
               {button?.value}
             </Button>
